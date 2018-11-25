@@ -1,0 +1,126 @@
+<html>
+	<head>
+		<title>BriteCore Test</title>
+		<link rel="stylesheet" href="static/bootstrap.min.css" />
+		<style>
+			.half{
+				display: inline-block;
+				position: relative;
+				height: 100%;
+				width: 50%;
+				margin: 0;
+				padding: 30px;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="half">
+			<div class="container">
+				<div class="row">
+					<div class="col-12"> <h4 class="text-center">Add Feature Request</h4> </div>
+				</div>
+				<div class="row">
+					<div class="col-12">
+						<div class="form-group">
+							<label for="title">Title:</label>
+							<input type="text" class="form-control" id="title" />
+						</div>
+						<div class="form-group">
+							<label for="description">Description:</label>
+							<textarea class="form-control" id="description"></textarea>
+						</div>
+						<div class="form-group">
+							<label for="client">Client:</label>
+							<select class="form-control" id="client">
+								<option value="Client1">Client1</option>
+								<option value="Client2">Client2</option>
+								<option value="Client3">Client3</option>
+							</select>
+						</div>
+						<div class="form-group">
+							<label for="priority">Priority:</label>
+							<select class="form-control" id="priority">
+								<option value="1">1</option>
+								<option value="2">2</option>
+								<option value="3">3</option>
+								<option value="4">4</option>
+								<option value="5">5</option>
+							</select>
+						</div>
+						<div class="form-group">
+							<label for="tdate">Target Date:</label>
+							<input type="text" class="form-control" id="tdate" />
+						</div>
+						<div class="form-group">
+							<label for="parea">Product Area:</label>
+							<select class="form-control" id="parea">
+								<option value="Policies">Policies</option>
+								<option value="Billing">Billing</option>
+								<option value="Claims">Claims</option>
+								<option value="Reports">Reports</option>
+							</select>
+						</div>
+
+						<button class="btn btn-primary" id="submit">Submit Feature Request</button>
+					</div>
+				</div>
+			</div>
+		</div><!--
+	--><div class="half">
+		<div class="container">
+				<div class="row">
+					<div class="col-12"> <h4 class="text-center">List Feature Request</h4> </div>
+				</div>
+				<div class="row">
+					<div class="col-12">
+						<button class="btn btn-primary" id="list">Refresh List</button>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-12">
+						<div id="render"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<script src="static/jquery.min.js"></script>
+		<script>
+			$(document).ready(function(){
+				$('#submit').click(function(evt){
+					var data = {
+						title: $('#title').val(),
+						description: $('#description').val(),
+						client: $('#client').val(),
+						priority: $('#priority').val(),
+						date: $('#tdate').val(),
+						area: $('#parea').val()
+					}
+					$.post('http://localhost:5000/requests', data, function(ret){
+						console.log(ret)
+					})
+				})
+				$('#list').click(function(evt){
+					$.get('http://localhost:5000/requests', function(list){
+
+						$('#render').html("")
+						var render = ""
+
+						for(var i in list){
+							var item = list[i]
+							render += "<tr>"
+							+ "<td>"+ item.title +"</td>"
+							+ "<td>"+ item.description +"</td>"
+							+ "<td>"+ item.client +"</td>"
+							+ "<td>"+ item.priority +"</td>"
+							+ "<td>"+ item.date +"</td>"
+							+ "<td>"+ item.area +"</td>"
+							+ "</tr>";
+						}
+
+						$('#render').html("<table class='table'>" + render + "</table>")
+					})
+				})
+			})
+		</script>
+	</body>
+</html>
