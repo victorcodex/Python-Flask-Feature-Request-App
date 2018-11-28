@@ -1,8 +1,8 @@
 # To Run
--- Clone the repo and cd into repo folder
--- Install Requirements (pip install -r requirements.txt)
--- Update SQLALCHEMY database config in app.py
--- (Run Server) python app.py
+- Clone the repo and cd into repo folder
+- Install Requirements (pip install -r requirements.txt)
+- Update SQLALCHEMY database config in app.py
+- (Run Server) python app.py
 
 # Approach
 1) I chose to cleanly seperate the frontend from the backend favouring the use of API calls over templates
